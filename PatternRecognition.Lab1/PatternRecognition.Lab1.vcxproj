@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D121AD12-E368-426E-A906-66F5BD966214}</ProjectGuid>
     <RootNamespace>PatternRecognitionLab1</RootNamespace>
-    <ProjectName>PatternRecognition.Lab5</ProjectName>
+    <ProjectName>PatternRecognition.Lab7</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
