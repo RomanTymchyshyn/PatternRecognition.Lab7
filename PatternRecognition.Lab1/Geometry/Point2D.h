@@ -1,20 +1,16 @@
 #pragma once
 
-#include "Point.h"
-
-class Point2D: public Point
+class Point2D
 {
 	public:
 
-		Point2D(double x = 0.0, double y = 0.0): Point(2, x, y) {};
+		Point2D(double x = 0.0, double y = 0.0): _x(x), _y(y) {};
 
-		Point2D(const Point2D & p): Point(p._coords) {
-			double cfc = 10;
-		};
+		Point2D(const Point2D& p): _x(p.X()), _y(p.Y()) {};
+		
+		double X() const { return _x; };
 
-		double X() const { return _coords[0]; };
-
-		double Y() const { return _coords[1]; };
+		double Y() const { return _y; };
 
 		Point2D Rotate(const double & angle) const;
 
@@ -23,6 +19,12 @@ class Point2D: public Point
 		Point2D Translation(const double & byX, const double & byY) const { return Point2D(this->X() + byX, this->Y() + byY); };
 
 		double Distance(const Point2D & p2) const;
+
+	private:
+
+		double _x;
+
+		double _y;
 };
 
 bool operator==(const Point2D & p1, const Point2D & p2);

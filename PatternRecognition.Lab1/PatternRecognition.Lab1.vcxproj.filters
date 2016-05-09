@@ -39,9 +39,6 @@
     <ClCompile Include="Geometry\Line2D.cpp">
       <Filter>Geometry\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\Point.cpp">
-      <Filter>Geometry\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry\Point2D.cpp">
       <Filter>Geometry\Source Files</Filter>
     </ClCompile>
@@ -75,9 +72,6 @@
       <Filter>Geometry\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Geometry\Line2D.h">
-      <Filter>Geometry\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry\Point.h">
       <Filter>Geometry\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Geometry\Point2D.h">

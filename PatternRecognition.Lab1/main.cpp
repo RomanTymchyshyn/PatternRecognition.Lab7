@@ -24,64 +24,39 @@ int main()
 	const int NumberOfLevels = 10;
 	const int NumberOfExperiments = 100;
 
+	std::cout << NumberOfExperiments << " experiments made for each lengthiness level.\n";
+
 	for (int j = 0; j < NumberOfLevels; ++j)
 	{
 		int countStandart = 0, countMinimum = 0, equalsCount = 0;
 		for (int i = 0; i < NumberOfExperiments; ++i)
 		{
-			try
-			{
-				std::vector<Point2D> points = helper->GenRandVertexes(NumberOfPoints, j + 1);
-		
-				Ellipsoid2D* simpleEl = ellipsoidBuilder->BuildEllipsoid(convHullBuilder, simpleRectangleBuilder, points);
-				Ellipsoid2D* minEl = ellipsoidBuilder->BuildEllipsoid(convHullBuilder, minRectangleBuilder, points);
+			std::vector<Point2D> points = helper->GenRandVertexes(NumberOfPoints, j + 1);
 
-				if (simpleEl == NULL || minEl == NULL)
-					continue;
+			Ellipsoid2D* simpleEl = ellipsoidBuilder->BuildEllipsoid(convHullBuilder, simpleRectangleBuilder, points);
+			Ellipsoid2D* minEl = ellipsoidBuilder->BuildEllipsoid(convHullBuilder, minRectangleBuilder, points);
+
+			if (simpleEl == NULL || minEl == NULL)
+				continue;
 			
-				double simpleArea = simpleEl->Area();
-				double minArea = minEl->Area();
-
-				for (int i = 0; i < points.size(); ++i)
-				{
-					if (!simpleEl->Inside(points[i]))
-					{
-						std::cout<<"NOT IN STANDART ELLIPSE"<<std::endl;
-						std::cin.get();
-						return 0;
-					}
-					if(!minEl->Inside(points[i]))
-					{
-						std::cout<<"NOT IN MIN ELLIPSE"<<std::endl;
-						std::cin.get();
-						return 0;
-					}
-				}
-
-				if (std::fabs(simpleArea - minArea) < 0.00001)
-				{
-					++equalsCount;
-				}
-				else if (simpleArea < minArea)
-				{
-					++countStandart;
-				}
-				else
-				{
-					++countMinimum;
-				}
+			double simpleArea = simpleEl->Area();
+			double minArea = minEl->Area();
+			
+			if (std::fabs(simpleArea - minArea) < 0.00001)
+			{
+				++equalsCount;
+			}
+			else if (simpleArea < minArea)
+			{
+				++countStandart;
+			}
+			else
+			{
+				++countMinimum;
+			}
 		
-				delete simpleEl;
-				delete minEl;
-			}
-			catch(const char* msg)
-			{
-				std::cout << "Exception caught: " << msg << std::endl;
-			}
-			catch(std::exception & ex)
-			{
-				std::cout << "Exception caught: " << ex.what() << std::endl;
-			}
+			delete simpleEl;
+			delete minEl;
 		}
 
 		std::cout << "Lengthiness level: " << j + 1 << "\n\t" << equalsCount << " times ellipses were EQUAL\n\t" << countStandart << " times Standart was smaller\n\t"<< countMinimum << " times Minimum was smaller" << std::endl;

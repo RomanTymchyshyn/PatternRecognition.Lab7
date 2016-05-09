@@ -28,12 +28,6 @@ Rectangle2D SimpleRectangleBuilder::GetRectangle(const std::vector<Point2D> & po
 
 	Rectangle2D rect = Rectangle2D(p1, p2, p3, p4);
 
-	/*
-	for (int j = 0; j < 4; ++j)
-		std::cout<<rect.Vertex(j).X()<<" "<<rect.Vertex(j).Y()<<"||";
-	std::cout<<std::endl;
-	*/
-
 	return rect;
 }
 

@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include "Point2D.h"
-#include "Line2D.h"
 #include "GeometryUtilities.h"
 
 class Rectangle2D

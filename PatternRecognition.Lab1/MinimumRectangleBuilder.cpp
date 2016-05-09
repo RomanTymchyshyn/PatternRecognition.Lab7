@@ -64,10 +64,6 @@ Rectangle2D MinimumRectangleBuilder::GetRectangle(const std::vector<Point2D> & c
 			minArea = area;
 		}
 	}
-
-	/*for (int j = 0; j < 4; ++j)
-	std::cout<<minRect.Vertex(j).X()<<" "<<minRect.Vertex(j).Y()<<"||";
-	std::cout<<std::endl;*/
-
+	
 	return minRect;
 }

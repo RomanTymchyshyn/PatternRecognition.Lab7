@@ -11,7 +11,7 @@ class EllipsoidBuilder
 {
 	public:
 
-		Ellipsoid2D* BuildEllipsoid(IConvexHullBuilder* convexHullBuilder, IRectangleBuilder* rectangleBuilder, const std::vector<Point2D>& points);
+		Ellipsoid2D* BuildEllipsoid(IConvexHullBuilder* convexHullBuilder, IRectangleBuilder* rectBuilder, const std::vector<Point2D>& points);
 
 	private:
 
@@ -26,7 +26,4 @@ class EllipsoidBuilder
 			std::vector<double> & rectParams, double & angle);
 
 		double GetRadius(const std::vector<Point2D> & points, const Point2D & centre);
-
-		Ellipsoid2D* BuildEllipsoid(const Rectangle2D & rect, std::vector<Point2D> points);
-
 };
