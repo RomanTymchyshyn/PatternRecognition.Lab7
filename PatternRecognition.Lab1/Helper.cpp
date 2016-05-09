@@ -1,4 +1,5 @@
 #include "Helper.h"
+#include <cstdlib>
 
 std::vector<Point2D> Helper::GenRandVertexes(int number, int lengthiness)
 {
@@ -10,8 +11,8 @@ std::vector<Point2D> Helper::GenRandVertexes(int number, int lengthiness)
 	std::vector<Point2D> points;
 	for (int i = 0; i < number; ++i)
 	{
-		x = (double)(rand() % maxX + min);
-		y = (double)(rand() % maxY + min);
+		x = (maxX - min) * ((double)std::rand() / RAND_MAX) + min;
+		y = (maxY - min) * ((double)std::rand() / RAND_MAX) + min;
 		points.push_back(Point2D(x, y));
 	}
 	return points;

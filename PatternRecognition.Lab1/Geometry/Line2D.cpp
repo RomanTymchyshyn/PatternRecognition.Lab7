@@ -7,7 +7,7 @@ Line2D::Line2D()
 
 Line2D::Line2D(const double& a, const double& b, const double& c)
 {
-	if (A == 0 && B == 0) throw;
+	if (A == 0 && B == 0) throw "BAD LINE COEFS ! ! !";
 	A = a, B = b, C = c;
 }
 
@@ -43,7 +43,7 @@ int Line2D::Deviation(const Point2D& p)
 
 double Line2D::Distance(const Point2D& p)
 {
-	double distance = fabs(p.X() * A + p.Y() * B + C) / sqrt(A*A + B*B);
+	double distance = std::fabs(p.X() * A + p.Y() * B + C) / std::sqrt(A*A + B*B);
 	return distance;
 }
 

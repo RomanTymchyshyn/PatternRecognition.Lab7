@@ -1,4 +1,5 @@
 #include "GeometryUtilities.h"
+#include <math.h>
 
 std::vector<double> rotate(std::vector<double> a, const double & phi)
 {

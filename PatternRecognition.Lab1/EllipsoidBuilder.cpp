@@ -1,6 +1,7 @@
 #include "EllipsoidBuilder.h"
 #include <algorithm>
 #include <fstream>
+#include <math.h>
 
 Ellipsoid2D* EllipsoidBuilder::BuildEllipsoid(IConvexHullBuilder* convexHullBuilder, IRectangleBuilder* rectangleBuilder, const std::vector<Point2D>& points)
 {
@@ -12,8 +13,8 @@ Ellipsoid2D* EllipsoidBuilder::BuildEllipsoid(IConvexHullBuilder* convexHullBuil
 	reverse(conv.begin(), conv.end()); //counterclockwise
 
 	Rectangle2D rect = rectangleBuilder->GetRectangle(conv);
-
-	return new Ellipsoid2D(BuildEllipsoid(rect, conv));
+	
+	return BuildEllipsoid(rect, conv);
 }
 
 std::vector<Point2D> EllipsoidBuilder::RotatePoints(const std::vector<Point2D> & points, const double & angle)
@@ -73,7 +74,7 @@ void EllipsoidBuilder::GetParameters(const Rectangle2D & rect, std::vector<doubl
 	int secondPoint = rect.Vertex(neighbour1).X() > rect.Vertex(neighbour2).X() ? neighbour1 : neighbour2;
 	double a1 = rect.Vertex(secondPoint).X() - rect.Vertex(leftBottomIndex).X();
 	double a2 = rect.Vertex(secondPoint).Y() - rect.Vertex(leftBottomIndex).Y();
-	angle = acos(a1 / sqrt(a1 * a1 + a2 * a2));
+	angle = std::acos(a1 / sqrt(a1 * a1 + a2 * a2));
 	if (a2 < 0) angle *= -1.0;
 
 	rectParams.push_back(rect.Vertex(secondPoint).Distance(rect.Vertex(leftBottomIndex)));
@@ -81,7 +82,7 @@ void EllipsoidBuilder::GetParameters(const Rectangle2D & rect, std::vector<doubl
 		rect.Vertex(leftBottomIndex)));
 }
 
-Ellipsoid2D EllipsoidBuilder::BuildEllipsoid(const Rectangle2D & rect, std::vector<Point2D> points)
+Ellipsoid2D* EllipsoidBuilder::BuildEllipsoid(const Rectangle2D & rect, std::vector<Point2D> points)
 {
 	std::vector<double> rectParams;
 	std::vector<double> offset;
@@ -112,13 +113,13 @@ Ellipsoid2D EllipsoidBuilder::BuildEllipsoid(const Rectangle2D & rect, std::vect
 
 	std::vector<double> axes(2, R);
 
-	Ellipsoid2D res(centre, eVectors, axes);
+	Ellipsoid2D* res = new Ellipsoid2D(centre, eVectors, axes);
 
-	res = res.Scale(1.0 / alpha, 1.0);
+	(*res) = res->Scale(1.0 / alpha, 1.0);
 
-	res = res.Rotate(-angle);
+	(*res) = res->Rotate(-angle);
 
-	res = res.Translation(-offset[0], -offset[1]);
+	(*res) = res->Translation(-offset[0], -offset[1]);
 
 	return res;
 }

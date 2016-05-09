@@ -26,7 +26,15 @@ Rectangle2D SimpleRectangleBuilder::GetRectangle(const std::vector<Point2D> & po
 	Point2D p3 = L2.Intersection(L4);
 	Point2D p4 = L2.Intersection(L3);
 
-	return Rectangle2D(p1, p2, p3, p4);
+	Rectangle2D rect = Rectangle2D(p1, p2, p3, p4);
+
+	/*
+	for (int j = 0; j < 4; ++j)
+		std::cout<<rect.Vertex(j).X()<<" "<<rect.Vertex(j).Y()<<"||";
+	std::cout<<std::endl;
+	*/
+
+	return rect;
 }
 
 void SimpleRectangleBuilder::FindFarthestPair(const std::vector<Point2D> & points, Point2D & diag1, 

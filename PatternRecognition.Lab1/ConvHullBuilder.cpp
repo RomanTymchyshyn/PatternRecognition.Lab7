@@ -1,4 +1,5 @@
 #include "ConvHullBuilder.h"
+#include <algorithm>
 
 std::vector<Point2D> ConvHullBuilder::BuildRecursive(const std::vector<Point2D> & vertexes, const Point2D & left, const Point2D & right, Point2D & top) const
 {
@@ -61,7 +62,7 @@ bool Compare_Points_by_X(const Point2D & p1, const Point2D & p2)
 std::vector<Point2D> Sort_by_X(const std::vector<Point2D> & points)
 {
 	std::vector<Point2D> sorted_points(points);
-	sort(sorted_points.begin(), sorted_points.end(), Compare_Points_by_X);
+	std::sort(sorted_points.begin(), sorted_points.end(), Compare_Points_by_X);
 	return sorted_points;
 }
 
@@ -120,6 +121,7 @@ std::vector<Point2D> ConvHullBuilder::BuildConvHull(const std::vector<Point2D> &
 		if (CheckVectorsCollinearity(result[i % sizeOfConv], result[i - 1], result[i % sizeOfConv], result[(i + 1) % sizeOfConv]))
 		{
 			result.erase(result.begin() + (i % sizeOfConv));
+			--i;
 			--sizeOfConv;
 		}
 	}

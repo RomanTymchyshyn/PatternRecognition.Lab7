@@ -1,4 +1,5 @@
 #include "Ellipsoid2D.h"
+#include <math.h>
 
 Ellipsoid2D::Ellipsoid2D(const Ellipsoid2D & e)
 {
@@ -88,7 +89,7 @@ Ellipsoid2D Ellipsoid2D::Translation(const double& byX, const double& byY)
 
 bool Ellipsoid2D::Inside(const Point2D & p)
 {
-	double angle = acos(this->Eigenvectors(0, 0) / sqrt(this->Eigenvectors(0,0) * this->Eigenvectors(0,0)
+	double angle = std::acos(this->Eigenvectors(0, 0) / sqrt(this->Eigenvectors(0,0) * this->Eigenvectors(0,0)
 												  + this->Eigenvectors(1,0) * this->Eigenvectors(1,0)));//angle between (1,0)
 																										//and eigenvector which 
 																										//corresponds axe a

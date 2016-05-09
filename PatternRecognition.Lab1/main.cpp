@@ -1,6 +1,6 @@
 #include <vector>
 #include <iostream>
-#include <time.h>
+#include <ctime>
 #include "Helper.h"
 #include "Geometry/Geometry.h"
 #include "EllipsoidBuilder.h"
@@ -10,9 +10,6 @@
 #include "SimpleRectangleBuilder.h"
 #include "MinimumRectangleBuilder.h"
 
-void PrintRanks(std::ofstream & fo, const std::vector<int> & ranks, const std::string & direction, 
-	const std::string & centreChosen);
-
 int main()
 {
 	Helper* helper= new Helper();
@@ -21,7 +18,7 @@ int main()
 	IRectangleBuilder* minRectangleBuilder = new MinimumRectangleBuilder();
 	EllipsoidBuilder* ellipsoidBuilder = new EllipsoidBuilder();
 
-	srand(time(NULL));
+	std::srand(std::time(NULL));
 
 	const int NumberOfPoints = 300;
 	const int NumberOfLevels = 10;
@@ -29,31 +26,65 @@ int main()
 
 	for (int j = 0; j < NumberOfLevels; ++j)
 	{
-		int standart = 0, min = 0;
+		int countStandart = 0, countMinimum = 0, equalsCount = 0;
 		for (int i = 0; i < NumberOfExperiments; ++i)
 		{
-			std::vector<Point2D> points = helper->GenRandVertexes(NumberOfPoints, j + 1);
+			try
+			{
+				std::vector<Point2D> points = helper->GenRandVertexes(NumberOfPoints, j + 1);
 		
-			Ellipsoid2D* simpleEl = ellipsoidBuilder->BuildEllipsoid(convHullBuilder, simpleRectangleBuilder, points);
-			Ellipsoid2D* minEl = ellipsoidBuilder->BuildEllipsoid(convHullBuilder, minRectangleBuilder, points);
+				Ellipsoid2D* simpleEl = ellipsoidBuilder->BuildEllipsoid(convHullBuilder, simpleRectangleBuilder, points);
+				Ellipsoid2D* minEl = ellipsoidBuilder->BuildEllipsoid(convHullBuilder, minRectangleBuilder, points);
 
-			if (simpleEl == NULL || minEl == NULL)
-				continue;
+				if (simpleEl == NULL || minEl == NULL)
+					continue;
 			
-			if (simpleEl->Area() < minEl->Area())
-			{
-				++standart;
-			}
-			else
-			{
-				++min;
-			}
+				double simpleArea = simpleEl->Area();
+				double minArea = minEl->Area();
+
+				for (int i = 0; i < points.size(); ++i)
+				{
+					if (!simpleEl->Inside(points[i]))
+					{
+						std::cout<<"NOT IN STANDART ELLIPSE"<<std::endl;
+						std::cin.get();
+						return 0;
+					}
+					if(!minEl->Inside(points[i]))
+					{
+						std::cout<<"NOT IN MIN ELLIPSE"<<std::endl;
+						std::cin.get();
+						return 0;
+					}
+				}
+
+				if (std::fabs(simpleArea - minArea) < 0.00001)
+				{
+					++equalsCount;
+				}
+				else if (simpleArea < minArea)
+				{
+					++countStandart;
+				}
+				else
+				{
+					++countMinimum;
+				}
 		
-			delete simpleEl;
-			delete minEl;
+				delete simpleEl;
+				delete minEl;
+			}
+			catch(const char* msg)
+			{
+				std::cout << "Exception caught: " << msg << std::endl;
+			}
+			catch(std::exception & ex)
+			{
+				std::cout << "Exception caught: " << ex.what() << std::endl;
+			}
 		}
 
-		std::cout << "Lengthiness level: " << j + 1 << "\n\t" << standart << " times Standart was smaller\n\t"<< min << " times Minimum was smaller" << std::endl;
+		std::cout << "Lengthiness level: " << j + 1 << "\n\t" << equalsCount << " times ellipses were EQUAL\n\t" << countStandart << " times Standart was smaller\n\t"<< countMinimum << " times Minimum was smaller" << std::endl;
 	}
 
 	std::cout << "Press any key.\n";

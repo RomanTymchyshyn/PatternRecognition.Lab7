@@ -27,6 +27,6 @@ class EllipsoidBuilder
 
 		double GetRadius(const std::vector<Point2D> & points, const Point2D & centre);
 
-		Ellipsoid2D BuildEllipsoid(const Rectangle2D & rect, std::vector<Point2D> points);
+		Ellipsoid2D* BuildEllipsoid(const Rectangle2D & rect, std::vector<Point2D> points);
 
 };

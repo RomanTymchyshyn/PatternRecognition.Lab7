@@ -8,6 +8,10 @@ class Point2D: public Point
 
 		Point2D(double x = 0.0, double y = 0.0): Point(2, x, y) {};
 
+		Point2D(const Point2D & p): Point(p._coords) {
+			double cfc = 10;
+		};
+
 		double X() const { return _coords[0]; };
 
 		double Y() const { return _coords[1]; };

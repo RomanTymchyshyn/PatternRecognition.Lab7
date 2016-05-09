@@ -19,7 +19,7 @@ class Ellipsoid2D
 		
 		Ellipsoid2D(const Point2D & centre, const std::vector<std::vector<double>> & eigenvectors, const std::vector<double> & axes);
 		
-		Point2D Centre() const { if (_centre != NULL) return *_centre; else return Point2D(); };
+		Point2D Centre() const { return *_centre; };
 		
 		std::vector<std::vector<double>> Eigenvectors() const { return _eigenvectors; };
 		
